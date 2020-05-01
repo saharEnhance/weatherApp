@@ -8,5 +8,6 @@
     <string name="action_search_message">search</string>
     <string name="degree">59°</string>
     <string name="image">image</string>
+    <string name="warning">TextView</string>
 
 </resources>
