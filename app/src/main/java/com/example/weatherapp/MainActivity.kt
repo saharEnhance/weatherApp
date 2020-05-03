@@ -6,69 +6,78 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : AppCompatActivity()
-{
+class MainActivity : AppCompatActivity() {
+    private lateinit var adapter: ForecastAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+
+    private var testData: MutableList<Hourly> =
+        mutableListOf(
+            Hourly("10pm", "10", "15%"),
+            Hourly("11pm", "10", "15%"),
+            Hourly("12pm", "10", "15%"),
+            Hourly("1pm", "10", "15%"),
+            Hourly("2pm", "10", "15%"),
+            Hourly("3pm", "10", "15%"),
+            Hourly("10pm", "10", "15%"),
+            Hourly("10pm", "10", "15%")
+        )
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         val toolbar: Toolbar = findViewById(R.id.toolbar)
-       setSupportActionBar(toolbar)
+        setSupportActionBar(toolbar)
         supportActionBar!!.title = " "
-  /*      super.onCreate(savedInstanceState)
-//        Set layout file to class
-        setContentView(R.layout.activity_main)
-//        initialize the recyclerView from the XML
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-//        Initializing the type of layout, here I have used LinearLayoutManager you can try GridLayoutManager
-//        Based on your requirement to allow vertical or horizontal scroll , you can change it in  LinearLayout.VERTICAL
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-//        Create an arraylist
-        val dataList = ArrayList<Model>()
-        dataList.add(Model("Phone", 1))
-        dataList.add(Model("Watch", 2))
-        dataList.add(Model("Note", 3))
-        dataList.add(Model("Pin", 4))
-//        pass the values to RvAdapter
-        val rvAdapter = RvAdapter(dataList)
-//        set the recyclerView to the adapter
-        recyclerView.adapter = rvAdapter;*/
+        initRecyclerView()
+
 
     }
+
+    private fun initRecyclerView() {
+
+        HourlyForecast.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        adapter = ForecastAdapter(testData as MutableList<Hourly>) { hourly: String ->
+            partItemClicked(hourly)
+        }
+        HourlyForecast.adapter = adapter
+    }
+
+    private fun partItemClicked(hourly: String) {
+        Toast.makeText(this, "Clicked: $hourly", Toast.LENGTH_LONG).show()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.options_menu, menu)
         // Associate searchable configuration with the SearchView
-     /*   val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        (menu.findItem(R.id.search).actionView as SearchView).apply {
-            setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        }*/
+        /*   val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+           (menu.findItem(R.id.search).actionView as SearchView).apply {
+               setSearchableInfo(searchManager.getSearchableInfo(componentName))
+           }*/
         return true
     }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean
-    {
-        when (item.itemId)
-        {
 
-            R.id.action_favorites ->
-            {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+
+            R.id.action_favorites -> {
                 displayToast(getString(R.string.action_favorites_message))
                 return true
             }
-            R.id.action_status ->
-            {
+            R.id.action_status -> {
                 displayToast(getString(R.string.action_status_message))
                 return true
             }
-            R.id.search ->
-            {
+            R.id.search -> {
                 displayToast(getString(R.string.action_search_message))
                 return true
             }
-            else ->
-            {
+            else -> {
             }
         }
         return super.onOptionsItemSelected(item)
@@ -76,20 +85,11 @@ class MainActivity : AppCompatActivity()
 
 
     fun displayToast(message: String?) {
-        Toast.makeText(applicationContext , message ,
-            Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            applicationContext, message,
+            Toast.LENGTH_SHORT
+        ).show()
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

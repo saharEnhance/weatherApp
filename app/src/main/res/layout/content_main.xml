@@ -8,36 +8,12 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="441dp"
-        android:layout_height="275dp"
-        android:layout_marginTop="114dp"
-        android:layout_marginBottom="183dp"
-        app:cardPreventCornerOverlap="false"
-        app:cardUseCompatPadding="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/cardView2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/cardView2"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2" >
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="411dp"
-            android:layout_height="match_parent"
-            app:srcCompat="@mipmap/mockweather" />
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="match_parent"
         android:layout_height="167dp"
         android:layout_marginTop="100dp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="false"
-        app:layout_constraintEnd_toEndOf="@id/cardView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/cardView"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -58,15 +34,51 @@
 
         <EditText
             android:id="@+id/editText"
-            android:layout_width="131dp"
-            android:layout_height="199dp"
+            android:layout_width="154dp"
+            android:layout_height="177dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="Partly Cloudy"
             android:textColor="#FFC107"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:autofillHints="" />
 
 
     </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/HourlyForecast"
+        android:layout_width="363dp"
+        android:layout_height="247dp"
+        android:layout_marginTop="159dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="166dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2"
+        app:layout_constraintVertical_bias="0.718" />
+
+    <Button
+        android:id="@+id/SeeDetails"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="85dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="#00BCD4"
+        android:text="See Details"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/HourlyForecast"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@+id/HourlyForecast"
+        app:layout_constraintTop_toTopOf="@+id/HourlyForecast"
+        app:layout_constraintVertical_bias="0.89" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

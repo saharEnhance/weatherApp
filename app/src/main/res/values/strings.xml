@@ -1,13 +1,10 @@
 <resources>
-    <string name="app_name">Flight Tickets</string>
-    <string name="action_settings">Settings</string>
-    <string name="lbl_price">Price</string>
-    <string name="title_activity_test">TestActivity</string>
-    <string name="action_favorites_message">favorites</string>
-    <string name="action_status_message">status</string>
-    <string name="action_search_message">search</string>
-    <string name="degree">59°</string>
-    <string name="image">image</string>
-    <string name="warning">TextView</string>
+<string name="app_name">Weather Forecast</string>
+<string name="action_favorites_message">favorites</string>
+<string name="action_status_message">status</string>
+<string name="action_search_message">search</string>
+<string name="degree">59°</string>
+<string name="image">image</string>
+<string name="warning">TextView</string>
 
 </resources>
