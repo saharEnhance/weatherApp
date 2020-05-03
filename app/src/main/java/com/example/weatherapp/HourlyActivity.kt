@@ -29,17 +29,17 @@ class HourlyActivity:AppCompatActivity() {
         setContentView(R.layout.activity_hourly)
         val toolbar: Toolbar = findViewById(R.id.toolbar2)
         setSupportActionBar(toolbar)
-        supportActionBar!!.title = "Hourly"
-        if (getSupportActionBar() != null){
-            getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar()!!.setDisplayShowHomeEnabled(true); }
+        val actionbar = supportActionBar
+        actionbar!!.title = "Hourly"
+        actionbar.setDisplayHomeAsUpEnabled(true)
+        actionbar.setDisplayHomeAsUpEnabled(true)
 
 
-         fun onSupportNavigateUp(): Boolean {
-            onBackPressed()
-            return true
-        }
         initRecyclerView()
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun initRecyclerView() {

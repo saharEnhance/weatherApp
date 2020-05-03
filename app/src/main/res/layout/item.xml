@@ -11,19 +11,22 @@
     <TextView
         android:id="@+id/timeView"
         android:layout_width="50dp"
-        android:layout_height="30dp"
+        android:layout_height="46dp"
+        android:gravity="center"
         android:text="AM/PM" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="match_parent"
         android:layout_height="43dp"
+        android:layout_gravity="center"
         card_view:srcCompat="@mipmap/weather_app_icon" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="41dp"
+        android:gravity="center"
         android:text="59°"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -32,5 +35,6 @@
         android:id="@+id/textView7"
         android:layout_width="match_parent"
         android:layout_height="49dp"
+        android:gravity="center"
         android:text="0%" />
 </LinearLayout>
