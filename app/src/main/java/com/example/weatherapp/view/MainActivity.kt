@@ -1,37 +1,85 @@
-package com.example.weatherapp
+package com.example.weatherapp.view
 
 import android.content.Intent
 import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.weatherapp.R
+import com.example.weatherapp.model.Weather
+import com.example.weatherapp.network.WeatherRestService
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
 
+   // lateinit var apiService: WeatherRestService
     private var mMessage: String? = null
-    private lateinit var adapter: ForecastAdapter
-    private var testData: MutableList<Hourly> =
+    private lateinit var adapter: HourlyAdapter
+    private var testData: MutableList<Weather> =
         mutableListOf(
-            Hourly("10pm", "10", "15%"),
-            Hourly("11pm", "10", "15%"),
-            Hourly("12pm", "10", "15%"),
-            Hourly("1pm", "10", "15%"),
-            Hourly("2pm", "10", "15%"),
-            Hourly("3pm", "10", "15%"),
-            Hourly("10pm", "10", "15%"),
-            Hourly("10pm", "10", "15%")
+            Weather(
+                "6pm",
+                "80°",
+                "15%",
+                "cloudy",
+                "N12MPH"
+            ),
+            Weather(
+                "11pm",
+                "10°",
+                "15%",
+                "cloudy",
+                "N12MPH"
+            ),
+            Weather(
+                "12pm",
+                "10",
+                "15%",
+                "cloudy",
+                "N12MPH"
+            ),
+            Weather(
+                "1pm",
+                "10°",
+                "15%",
+                "cloudy",
+                "N12MPH"
+            ),
+            Weather(
+                "2pm",
+                "10°",
+                "15%",
+                "cloudy",
+                "N12MPH"
+            ),
+            Weather(
+                "3pm",
+                "10",
+                "15%",
+                "cloudy",
+                "N12MPH"
+            ),
+            Weather(
+                "10pm",
+                "10",
+                "15%",
+                "cloudy",
+                "N12MPH"
+            ),
+            Weather(
+                "10pm",
+                "10",
+                "15%",
+                "cloudy",
+                "N12MPH"
+            )
         )
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,18 +90,19 @@ class MainActivity : AppCompatActivity() {
         val seeDetails: Button = findViewById<Button>(R.id.SeeDetails)
 
 
-        seeDetails.setOnClickListener{
-        val intent = Intent (this@MainActivity, HourlyActivity::class.java)
-            intent.putExtra(EXTRA_MESSAGE,mMessage)
+        seeDetails.setOnClickListener {
+            val intent = Intent(this@MainActivity, DetailsActivity::class.java)
+            intent.putExtra(EXTRA_MESSAGE, mMessage)
             startActivity(intent)
         }
-   /*     seeDetails!!.setOnClickListener { addFragment(HourlyFragment(), true, "HourlyFragment") }
+        /*     seeDetails!!.setOnClickListener { addFragment(HourlyFragment(), true, "HourlyFragment") }
 
-        if (savedInstanceState == null) {
-            val frg = HourlyFragment()
-            supportFragmentManager.beginTransaction().add(R.id.frag, frg).commit();
-        }*/
-
+             if (savedInstanceState == null) {
+                 val frg = HourlyFragment()
+                 supportFragmentManager.beginTransaction().add(R.id.frag, frg).commit();
+             }*/
+       // println("=========" + (apiService.getWeather("94040,us") ))
+        //Log.d(("======"),(apiService.getWeather("94040,us").toString()))
         initRecyclerView()
     }
 
@@ -73,10 +122,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
 
-        HourlyForecast.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        HourlyForecast.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        adapter = ForecastAdapter(testData as MutableList<Hourly>) { hourly: String ->
+        adapter = HourlyAdapter(testData as MutableList<Weather>) { hourly: String ->
             partItemClicked(hourly)
         }
         HourlyForecast.adapter = adapter
@@ -117,13 +165,10 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-
     fun displayToast(message: String?) {
         Toast.makeText(
             applicationContext, message,
             Toast.LENGTH_SHORT
         ).show()
     }
-
-
 }

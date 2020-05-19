@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#B91D44</color>
-    <color name="colorPrimaryDark">#B91D44</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#188890</color>
+    <color name="colorPrimaryDark">#00646A</color>
+    <color name="colorAccent">#4FF0FF</color>
+
+
+    <color name="view">#F4F3F3</color>
+
+
     <color name="airline_name">#515151</color>
+
     <color name="lbl_price">#787878</color>
     <color name="departure">#dd000000</color>
     <color name="tint_arrow">#6E6E6E</color>

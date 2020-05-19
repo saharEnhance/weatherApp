@@ -10,22 +10,22 @@
 
     <TextView
         android:id="@+id/timeViewH"
-        android:layout_width="48dp"
+        android:layout_width="16dp"
         android:layout_height="89dp"
         android:layout_weight="1"
         android:gravity="center"
         android:text="TextView" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/conditonViewH"
         android:layout_width="74dp"
-        android:layout_height="90dp"
+        android:layout_height="37dp"
         android:layout_gravity="center"
         card_view:srcCompat="@mipmap/weather_app_icon" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="75dp"
+        android:id="@+id/degreeViewH"
+        android:layout_width="61dp"
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="59°"
@@ -34,18 +34,21 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView8"
-        android:layout_width="24dp"
+        android:id="@+id/percentViewH"
+        android:layout_width="16dp"
         android:layout_height="93dp"
         android:layout_weight="1"
         android:gravity="center"
         android:text="0%" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/windViewH"
         android:layout_width="wrap_content"
         android:layout_height="93dp"
         android:layout_weight="1"
         android:gravity="center"
         android:text="N12MPH" />
+
+
+
 </LinearLayout>

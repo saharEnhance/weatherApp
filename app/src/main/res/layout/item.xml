@@ -16,14 +16,14 @@
         android:text="AM/PM" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/conditonView"
         android:layout_width="match_parent"
         android:layout_height="43dp"
         android:layout_gravity="center"
         card_view:srcCompat="@mipmap/weather_app_icon" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/degreeView"
         android:layout_width="match_parent"
         android:layout_height="41dp"
         android:gravity="center"
@@ -32,7 +32,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/percentView"
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:gravity="center"
