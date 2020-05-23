@@ -7,7 +7,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.R
 import com.example.weatherapp.model.Weather
-import kotlinx.android.synthetic.main.activity_hourly.*
+import kotlinx.android.synthetic.main.activity_details.*
 
 
 class DetailsActivity:AppCompatActivity() {
@@ -75,7 +75,7 @@ class DetailsActivity:AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_hourly)
+        setContentView(R.layout.activity_details)
         val toolbar: Toolbar = findViewById(R.id.toolbar2)
         setSupportActionBar(toolbar)
         val actionbar = supportActionBar

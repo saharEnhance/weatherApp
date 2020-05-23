@@ -141,6 +141,7 @@ class MainActivity : AppCompatActivity() {
            (menu.findItem(R.id.search).actionView as SearchView).apply {
                setSearchableInfo(searchManager.getSearchableInfo(componentName))
            }*/
+
         return true
     }
 

@@ -35,7 +35,7 @@ interface WeatherRestService {
                             .addHeader("Request-Type", "Android")
                             .addHeader("Content-Type", "application/json")
                             //.addHeader("x-rapidapi-host", "pro.openweathermap.org")
-                           // .addHeader("x-rapidapi-key", "439d4b804bc8187953eb36d2a8c26a02")
+                           // .addHeader("x-rapidapi-key", "f7949a8e538ca7d71ca37964558b28b2")
 
                         val request = requestBuilder.build()
                         return chain.proceed(request)
