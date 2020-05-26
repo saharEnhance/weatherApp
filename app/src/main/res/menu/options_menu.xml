@@ -1,25 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <item
-        android:id="@+id/action_status"
-        android:icon="@drawable/ic_status_foreground"
-        android:orderInCategory="100"
-        android:title="status"
-        app:showAsAction="always" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_favorites"
-        android:icon="@drawable/ic_favorite_foreground"
-        android:orderInCategory="100"
-        android:title="favorites"
-        app:showAsAction="always" />
+        android:id="@+id/degree"
+        android:title="Degree">
+        <menu>
+            <item
+                android:id="@+id/option_celcius"
+                android:icon="@drawable/ic_status_foreground"
+                android:orderInCategory="100"
+                android:title="C°"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/option_farenheit"
+                android:icon="@drawable/ic_status_foreground"
+                android:orderInCategory="100"
+                android:enabled="true"
+                android:title="F°"
+                app:showAsAction="never" />
+        </menu>
+    </item>
     <item
         android:id="@+id/search"
+        android:background="#FFFFFF"
         android:icon="@drawable/ic_search_foreground"
-        android:title="Search"
+        android:title="search here..."
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="always" />
+    <!--<item
+        app:actionViewClass="android.widget.Switch"
+        android:id="@+id/mySwitch"
+        android:background="#00ACC1"
+        android:title="on"
+        app:showAsAction="never" />
+
+    <item
+        app:actionViewClass="android.widget.ToggleButton"
+        android:title="toggle"
+        android:textOn="Logging On"
+        android:textOff="Logging Off"
+        android:background="@drawable/shapes"
+        app:showAsAction="never" />-->
+
 </menu>

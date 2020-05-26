@@ -34,8 +34,8 @@ interface WeatherRestService {
                             .addHeader("Accept", "application/json")
                             .addHeader("Request-Type", "Android")
                             .addHeader("Content-Type", "application/json")
-                            //.addHeader("x-rapidapi-host", "pro.openweathermap.org")
-                           // .addHeader("x-rapidapi-key", "f7949a8e538ca7d71ca37964558b28b2")
+                            .addHeader("x-rapidapi-host", "pro.openweathermap.org")
+                            .addHeader("appid", "f7949a8e538ca7d71ca37964558b28b2")
 
                         val request = requestBuilder.build()
                         return chain.proceed(request)
@@ -43,7 +43,7 @@ interface WeatherRestService {
                 }).build()
             //Retrofit
             val retrofit = Retrofit.Builder()
-                .baseUrl("pro.openweathermap.org")
+                .baseUrl("https://pro.openweathermap.org")
 
                 .client(okHttpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

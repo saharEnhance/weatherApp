@@ -1,10 +1,16 @@
 <resources>
-<string name="app_name">Weather Forecast</string>
-<string name="action_favorites_message">favorites</string>
-<string name="action_status_message">status</string>
-<string name="action_search_message">search</string>
-<string name="degree">59°</string>
-<string name="image">image</string>
-<string name="warning">TextView</string>
+    <string name="app_name">Weather Forecast</string>
+    <string name="action_favorites_message">favorites</string>
+    <string name="app_bar_switch">switch degree</string>
+    <string name="action_status_message">status</string>
+    <string name="action_search_message">search</string>
+    <string name="degree">59°</string>
+    <string name="image">image</string>
+    <string name="warning">TextView</string>
+    <string name="option_celcius_message">celcius</string>
+    <string name="option_farenheit_message">farenheit</string>
+    <string name="app_label">label</string>
+    <string name="search_hint">92626</string>
+
 
 </resources>

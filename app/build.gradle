@@ -89,5 +89,8 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:1.1.1"
     // use kapt for Kotlin
     implementation 'android.arch.persistence.room:rxjava2:1.1.1'
+    implementation 'androidx.mediarouter:mediarouter:1.1.0'
+
+
 
 }

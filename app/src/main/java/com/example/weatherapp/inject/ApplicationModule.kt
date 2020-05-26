@@ -1,4 +1,15 @@
 package com.example.weatherapp.inject
 
-class ApplicationModule {
+import android.content.Context
+import dagger.Module
+import dagger.Provides
+import javax.inject.Singleton
+
+@Module
+class ApplicationModule(val context: Context) {
+    @Singleton
+    @Provides
+    fun provideApplicationContext():Context{
+        return context
+    }
 }
