@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
-import com.example.weatherapp.model.Weather
+import com.example.weatherapp.model.Hourly
 
-class HourlyAdapter(private var list:MutableList<Weather>, private val clickListener: (String) -> Unit):RecyclerView.Adapter<HourlyViewHolder>() {
+class HourlyAdapter(private var list : ArrayList<Hourly>, private val clickListener: (Hourly) -> Unit):RecyclerView.Adapter<HourlyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HourlyViewHolder {
 
             val inflater = LayoutInflater.from(parent.context)
@@ -19,4 +19,12 @@ class HourlyAdapter(private var list:MutableList<Weather>, private val clickList
     override fun onBindViewHolder(holder: HourlyViewHolder, position: Int) {
         holder.bind(list[position], clickListener)
     }
+
+    fun updateWeather(weatherList:ArrayList<Hourly>){
+        this.list.clear()
+        this.list.addAll(weatherList)
+        notifyDataSetChanged()
+
+    }
+
 }

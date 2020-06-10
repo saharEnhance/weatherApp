@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 
-@Database(entities = [Weather::class], version = 1, exportSchema = true)
+@Database(entities = [Base::class], version = 1, exportSchema = true)
+@TypeConverters(Converters::class)
 abstract class WeatherRoomDB : RoomDatabase() {
 
     abstract fun WeatherDAO(): WeatherDAO
@@ -22,7 +24,7 @@ abstract class WeatherRoomDB : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context,
                     WeatherRoomDB::class.java,
-                    "weather_db"
+                    "forecast_db"
                 ).build()
                 INSTANCE = instance
                 return instance

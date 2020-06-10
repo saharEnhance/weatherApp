@@ -1,8 +1,16 @@
 package com.example.weatherapp.view
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
-import android.provider.AlarmClock.EXTRA_MESSAGE
+import android.os.Looper
+import android.os.Parcelable
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -10,87 +18,46 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.R
-import com.example.weatherapp.model.Weather
+import com.example.weatherapp.inject.WeatherApplication
+import com.example.weatherapp.model.Base
+import com.example.weatherapp.model.Hourly
 import com.example.weatherapp.viewmodel.WeatherViewModel
 import com.example.weatherapp.viewmodel.WeatherViewModelFactory
+import com.google.android.gms.location.*
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.content_main.*
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
-
 class MainActivity : AppCompatActivity() {
+
+    val PERMISSION_ID = 42
+
     @Inject
     lateinit var viewModelFactory: WeatherViewModelFactory
     lateinit var viewModel: WeatherViewModel
-    private lateinit var adapter: HourlyAdapter
-    var searched: String = "92626"
-    private var weatherList: MutableList<Weather> = mutableListOf()
+
+    var adapter: HourlyAdapter? = null
     private var mMessage: String? = null
-    private var testData: MutableList<Weather> =
-        mutableListOf(
-            Weather(
-                "6pm",
-                "80°",
-                "15%",
-                "cloudy",
-                "N12MPH"
-            ),
-            Weather(
-                "11pm",
-                "10°",
-                "15%",
-                "cloudy",
-                "N12MPH"
-            ),
-            Weather(
-                "12pm",
-                "10",
-                "15%",
-                "cloudy",
-                "N12MPH"
-            ),
-            Weather(
-                "1pm",
-                "10°",
-                "15%",
-                "cloudy",
-                "N12MPH"
-            ),
-            Weather(
-                "2pm",
-                "10°",
-                "15%",
-                "cloudy",
-                "N12MPH"
-            ),
-            Weather(
-                "3pm",
-                "10",
-                "15%",
-                "cloudy",
-                "N12MPH"
-            ),
-            Weather(
-                "10pm",
-                "10",
-                "15%",
-                "cloudy",
-                "N12MPH"
-            ),
-            Weather(
-                "10pm",
-                "10",
-                "15%",
-                "cloudy",
-                "N12MPH"
-            )
-        )
+
+    lateinit var mFusedLocationClient: FusedLocationProviderClient
+    var lat: Double = 0.0
+    var lon: Double = 0.0
+
+    var celOn: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        (application as WeatherApplication).appComponent.inject(this)
+        viewModel = viewModelFactory.create(WeatherViewModel::class.java)
         /*    // Verify the action and get the query
             if (Intent.ACTION_SEARCH == intent.action) {
                 intent.getStringExtra(SearchManager.QUERY)?.also { query ->
@@ -98,36 +65,165 @@ class MainActivity : AppCompatActivity() {
                 }
             }
     */
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        getLastLocation()
+
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.title = " "
         val seeDetails: Button = findViewById<Button>(R.id.SeeDetails)
+        val intent = Intent(this@MainActivity, DetailsActivity::class.java)
 
-        /*  val actionBar: ActionBar? = supportActionBar
-          actionBar?.setCustomView(R.layout.switch_layout)
-          actionBar?.displayOptions = ActionBar.DISPLAY_HOME_AS_UP
-          val switchButton: Switch = findViewById(R.id.actionbar_switch)
-          switchButton.setOnCheckedChangeListener(this)*/
+        viewModel.stateLiveData.observe(this, Observer { appState ->
+            when (appState) {
+                is WeatherViewModel.AppState.LOADING -> displayToast("Loading")
+                is WeatherViewModel.AppState.SUCCESS -> {
+                    displayWeather(appState.weatherList, appState.weatherList.hourly)
 
+                    var dailyList = appState.weatherList.daily
+                    intent.putParcelableArrayListExtra(
+                        "parce",
+                        dailyList as ArrayList<out Parcelable?>?
+                    )
+                }
+                is WeatherViewModel.AppState.ERROR -> displayToast("error!!")
+                else -> displayToast("Something Went Wrong... Try Again.")
+            }
+        })
         seeDetails.setOnClickListener {
-            val intent = Intent(this@MainActivity, DetailsActivity::class.java)
-            intent.putExtra(EXTRA_MESSAGE, mMessage)
             startActivity(intent)
         }
-
-        initRecyclerView()
     }
 
+    @SuppressLint("MissingPermission")
+    private fun getLastLocation() {
 
-    private fun initRecyclerView() {
+        if (checkPermissions()) {
+            if (isLocationEnabled()) {
+
+                mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
+                    var location: Location? = task.result
+                    if (location == null) {
+                        requestNewLocationData()
+                    } else {
+
+                        lat = location.latitude
+                        lon = location.longitude
+                        viewModel.getWeather(lat, lon)
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+        } else {
+            requestPermissions()
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun requestNewLocationData() {
+        var mLocationRequest = LocationRequest()
+        mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        mLocationRequest.interval = 0
+        mLocationRequest.fastestInterval = 0
+        mLocationRequest.numUpdates = 1
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        mFusedLocationClient.requestLocationUpdates(
+            mLocationRequest, mLocationCallback,
+            Looper.myLooper()
+        )
+    }
+
+    private val mLocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            var mLastLocation: Location = locationResult.lastLocation
+            lat = mLastLocation.latitude
+            lon = mLastLocation.longitude
+        }
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        var locationManager: LocationManager =
+            getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    private fun checkPermissions(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true
+        }
+        return false
+    }
+
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ),
+            PERMISSION_ID
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == PERMISSION_ID) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                getLastLocation()
+            }
+        }
+    }
+
+    private fun displayWeather(weatherList: Base, hourly: ArrayList<Hourly>) {
+
+        adapter?.updateWeather(hourly)
+        initRecyclerView(hourly)
+        if (celOn) {
+            textTemp.text = weatherList.current.temp.toString() + "°C"
+        }
+        textTemp.text = weatherList.current.temp.toString() + "°F"
+        textFeel.text = weatherList.current.feels_like.toString()
+        textDescription.text = weatherList.current.weather[0].description
+        var st = weatherList.current.weather[0].icon
+        Picasso.get().load("https://openweathermap.org/img/wn/$st@2x.png").into(imageView)
+        minMax.text = weatherList.current.humidity.toString()
+        val sdf = SimpleDateFormat("dd/MM/yy hh:mm a")
+        val netDate = Date(weatherList.current.dt.toLong() * 1000)
+        val date = sdf.format(netDate)
+        dateText.text = date
+        minMax.text = weatherList.current.humidity.toString()
+    }
+
+    private fun initRecyclerView(hourly: ArrayList<Hourly>) {
 
         HourlyForecast.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        adapter = HourlyAdapter(testData as MutableList<Weather>) { hourly: String ->
-            partItemClicked(hourly)
+        adapter = HourlyAdapter(hourly) { hourly: Hourly ->
+            onHourlySelected(hourly)
         }
         HourlyForecast.adapter = adapter
+    }
+
+    private fun onHourlySelected(hourly: Hourly) {
+        Toast.makeText(this, "Clicked: $hourly", Toast.LENGTH_LONG).show()
     }
 
     private fun partItemClicked(hourly: String) {
@@ -173,17 +269,15 @@ class MainActivity : AppCompatActivity() {
 
             R.id.option_celcius -> {
                 displayToast(getString(R.string.option_celcius_message))
-                item.setIcon(R.drawable.ic_favorite_foreground)
+                //   item.setIcon(R.drawable.ic_favorite_foreground)
                 //  item.isVisible = false
-
-
+                celOn = true
                 return true
             }
             R.id.option_farenheit -> {
                 displayToast(getString(R.string.option_farenheit_message))
-                item.setIcon(R.drawable.ic_backarrow_foreground)
+                //  item.setIcon(R.drawable.ic_backarrow_foreground)
                 //item.isVisible = false
-
                 /*listView.setVisibility(View.VISIBLE)
                 gv.setVisibility(View.INVISIBLE)*/
 
@@ -213,10 +307,5 @@ class MainActivity : AppCompatActivity() {
             return ((degree * 9) / 5) + 32
         return 0
     }
-
-
-/*    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        //Toast.makeText(MainActivity::this, String)
-        displayToast("switch clicked!!") }*/
 }
 

@@ -9,12 +9,12 @@ import androidx.room.Query
 @Dao
 interface WeatherDAO {
 
-    @Query("SELECT * FROM weather")
-    fun getWeather(): LiveData<Weather>
+    @Query("SELECT * FROM forecast")
+    fun getWeather(): LiveData<Base>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun updateCache(
-        weather: List<Weather>
+        weather: List<Base>
     )
 }

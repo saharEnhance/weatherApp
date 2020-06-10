@@ -22,43 +22,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="394dp"
         android:layout_height="534dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginBottom="37dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar4">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/hourlyDetails"
-            android:layout_width="340dp"
-            android:layout_height="390dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="84dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.043"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="343dp"
-            android:layout_height="46dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginRight="40dp"
-            android:text="Sunday April 26"
-            app:layout_constraintBottom_toTopOf="@+id/hourlyDetails"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.Toolbar
@@ -79,8 +65,8 @@
 
     <TextView
         android:id="@+id/textView16"
-        android:layout_width="83dp"
-        android:layout_height="57dp"
+        android:layout_width="82dp"
+        android:layout_height="56dp"
         android:layout_marginEnd="350dp"
         android:layout_marginRight="350dp"
         android:layout_marginBottom="37dp"
@@ -96,8 +82,8 @@
 
     <TextView
         android:id="@+id/textView17"
-        android:layout_width="55dp"
-        android:layout_height="54dp"
+        android:layout_width="53dp"
+        android:layout_height="56dp"
         android:gravity="center"
         android:text="COND"
         android:textStyle="bold"
@@ -127,17 +113,17 @@
 
     <TextView
         android:id="@+id/textView18"
-        android:layout_width="56dp"
-        android:layout_height="55dp"
-        android:gravity="center"
+        android:layout_width="60dp"
+        android:layout_height="54dp"
+        android:gravity="center|right"
         android:text="PRECIP"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.008"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textV"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView19"

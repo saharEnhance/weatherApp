@@ -10,14 +10,12 @@
         <menu>
             <item
                 android:id="@+id/option_celcius"
-                android:icon="@drawable/ic_status_foreground"
                 android:orderInCategory="100"
                 android:title="C°"
                 app:showAsAction="never" />
 
             <item
                 android:id="@+id/option_farenheit"
-                android:icon="@drawable/ic_status_foreground"
                 android:orderInCategory="100"
                 android:enabled="true"
                 android:title="F°"

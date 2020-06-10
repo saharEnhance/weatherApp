@@ -13,7 +13,9 @@
         android:layout_width="50dp"
         android:layout_height="46dp"
         android:gravity="center"
-        android:text="AM/PM" />
+        android:text="AM/PM"
+        android:textSize="12sp"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/conditonView"
@@ -28,7 +30,7 @@
         android:layout_height="41dp"
         android:gravity="center"
         android:text="59°"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
     <TextView
@@ -36,5 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:gravity="center"
-        android:text="0%" />
+        android:text="0%"
+        android:textSize="14sp" />
 </LinearLayout>

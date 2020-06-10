@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
-import com.example.weatherapp.model.Weather
+import com.example.weatherapp.model.Daily
 
-class DetailsAdapter(private var list:MutableList<Weather>, private val clickListener: (String) -> Unit):RecyclerView.Adapter<DetailsViewHolder>() {
+class DetailsAdapter(private var list:MutableList<Daily>, private val clickListener: (Daily) -> Unit):RecyclerView.Adapter<DetailsViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailsViewHolder {
 
             val inflater = LayoutInflater.from(parent.context)

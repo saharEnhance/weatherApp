@@ -7,8 +7,13 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class WeatherRepositoryImp @Inject constructor(private val weatherRestService: WeatherRestService) : WeatherRepository {
-    override fun getWeatherList(zip: String): Single<MutableList<Weather>> {
+    override fun getWeatherList(zip: String): Single<MutableList<Base>> {
         return weatherRestService.getWeather(zip).subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun getWeatherList(lat: Double,lon:Double): Single<Base> {
+        return weatherRestService.getWeather(lat,lon).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
 }

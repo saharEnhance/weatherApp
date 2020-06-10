@@ -1,5 +1,6 @@
 package com.example.weatherapp.network
 
+import com.example.weatherapp.model.Base
 import com.example.weatherapp.model.Weather
 import io.reactivex.Single
 import okhttp3.Interceptor
@@ -31,11 +32,13 @@ interface WeatherRestService {
                     override fun intercept(chain: Interceptor.Chain): Response {
                         val original = chain.request()
                         val requestBuilder = original.newBuilder()
-                            .addHeader("Accept", "application/json")
+                            /*.addHeader("Accept", "application/json")
                             .addHeader("Request-Type", "Android")
                             .addHeader("Content-Type", "application/json")
                             .addHeader("x-rapidapi-host", "pro.openweathermap.org")
                             .addHeader("appid", "f7949a8e538ca7d71ca37964558b28b2")
+
+                            */
 
                         val request = requestBuilder.build()
                         return chain.proceed(request)
@@ -43,7 +46,7 @@ interface WeatherRestService {
                 }).build()
             //Retrofit
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://pro.openweathermap.org")
+                .baseUrl("https://api.openweathermap.org")
 
                 .client(okHttpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -53,7 +56,11 @@ interface WeatherRestService {
         }
     }
 
-    @GET("/data/2.5/forecast/hourly")
-    fun getWeather(@Query("zip") zip: String): Single<MutableList<Weather>>
+    @GET("/data/2.5/weather")
+    fun getWeather(@Query("zip") zip: String, @Query ("appid") key:String="f7949a8e538ca7d71ca37964558b28b2"): Single<MutableList<Base>>
+
+    @GET("data/2.5/onecall")
+    fun getWeather(@Query("lat") lat: Double,@Query("lon") lon: Double,@Query ("exclude") exclude:String="minutely",
+                   @Query ("appid") key:String="f7949a8e538ca7d71ca37964558b28b2"): Single<Base>
 
 }
