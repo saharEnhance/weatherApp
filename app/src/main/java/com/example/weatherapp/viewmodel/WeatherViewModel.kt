@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.weatherapp.model.Base
 import com.example.weatherapp.model.Hourly
+import com.example.weatherapp.model.WeatherDAO
 import com.example.weatherapp.model.WeatherRepositoryImp
 import io.reactivex.disposables.CompositeDisposable
 import java.net.UnknownHostException
@@ -17,28 +18,6 @@ class WeatherViewModel @Inject constructor(private val weatherRepositoryImp: Wea
     val stateLiveData: LiveData<AppState> get() = stateMutableLiveData
     var loaded = false
 
-    /*    fun getWeather(zip:String){
-
-            stateMutableLiveData.value = AppState.LOADING
-            disposable.add(
-                weatherRepositoryImp.getWeatherList(zip).subscribe({
-                    loaded = true
-                    if (it.isEmpty()) {
-                        stateMutableLiveData.value = AppState.ERROR("No weather Retrieved")
-                    } else {
-                        stateMutableLiveData.value = AppState.SUCCESS(it)
-                    }
-                }, {
-                    loaded = true
-                    //errors
-                    val errorString = when (it) {
-                        is UnknownHostException -> it.localizedMessage
-                        else -> it.localizedMessage
-                    }
-                    stateMutableLiveData.value = AppState.ERROR(errorString)
-                })
-            )
-        }*/
     fun getWeather(lat: Double, lon: Double) {
 
         stateMutableLiveData.value = AppState.LOADING
@@ -49,10 +28,10 @@ class WeatherViewModel @Inject constructor(private val weatherRepositoryImp: Wea
                 if (it.equals(null)) {
                     stateMutableLiveData.value = AppState.ERROR("No weather Retrieved")
                 } else {
-
                     /*   it.hourly.forEach { hourly ->
                            mutableList.add(MyDailyInfo(hourly.weather[0].icon, it.current.temp, it.daily[0].rain ) )
                        }*/
+                   // weatherDAO?.updateCache(it)
                     stateMutableLiveData.value = AppState.SUCCESS(it,it.hourly)
                 }
             }, {
@@ -76,4 +55,3 @@ class WeatherViewModel @Inject constructor(private val weatherRepositoryImp: Wea
         data class ERROR(val message: String) : AppState()
     }
 }
-

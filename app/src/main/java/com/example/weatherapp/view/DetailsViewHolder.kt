@@ -1,6 +1,5 @@
 package com.example.weatherapp.view
 
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.model.Daily
@@ -19,12 +18,10 @@ class DetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.degreeViewH.text = daily.clouds.toString()
         itemView.percentViewH.text = daily.rain.toString()
         itemView.windViewH.text = daily.clouds.toString()
-
         var st = daily.weather[0].icon
-        Log.d("detailSctivity", st)
-        Picasso.get().load("http://openweathermap.org/img/wn/$st@2x.png")
+        Picasso.get().load("https://openweathermap.org/img/wn/$st@2x.png")
             .into(itemView.conditonViewH)
-
+        // Glide.with(itemView).load("https://openweathermap.org/img/wn/$st@2x.png").into(itemView.conditonViewH)
         itemView.setOnClickListener { clickListener(daily) }
 
     }

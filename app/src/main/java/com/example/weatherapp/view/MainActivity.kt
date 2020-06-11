@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.os.Looper
 import android.os.Parcelable
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -25,6 +26,7 @@ import com.example.weatherapp.R
 import com.example.weatherapp.inject.WeatherApplication
 import com.example.weatherapp.model.Base
 import com.example.weatherapp.model.Hourly
+import com.example.weatherapp.model.WeatherDAO
 import com.example.weatherapp.viewmodel.WeatherViewModel
 import com.example.weatherapp.viewmodel.WeatherViewModelFactory
 import com.google.android.gms.location.*
@@ -50,6 +52,7 @@ class MainActivity : AppCompatActivity() {
     var lon: Double = 0.0
 
     var celOn: Boolean = false
+ //   var dao: WeatherDAO?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -93,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         seeDetails.setOnClickListener {
             startActivity(intent)
         }
+       // Log.d("dao = ", dao?.getWeather().toString())
     }
 
     @SuppressLint("MissingPermission")

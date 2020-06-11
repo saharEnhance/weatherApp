@@ -14,7 +14,6 @@ interface WeatherDAO {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun updateCache(
-        weather: List<Base>
-    )
+    fun updateCache(weather: Base)
+
 }

@@ -14,8 +14,8 @@ class WeatherApplication:Application() {
             .viewModelModule(ViewModelModule())
             .restModule(RestModule())
             .repositoryModule(RepositoryModule())
+            .daoModule(DaoModule(this))
             .build()
     }
-
 
 }
