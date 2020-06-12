@@ -20,10 +20,10 @@
 
     <ImageView
         android:id="@+id/conditonViewH"
-        android:layout_width="89dp"
-        android:layout_height="92dp"
+        android:layout_width="52dp"
+        android:layout_height="63dp"
         android:layout_gravity="center"
-        tools:src="@mipmap/weather_app_icon"/>
+        tools:src="@mipmap/weather_app_icon" />
 
     <TextView
         android:id="@+id/degreeViewH"

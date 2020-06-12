@@ -11,13 +11,13 @@ class WeatherRepositoryImp @Inject constructor(
     private val database: WeatherRoomDB
 ) : WeatherRepository {
 
-    override fun getWeatherList(lat: Double, lon: Double): Single<Base> {
-        return weatherRestService.getWeather(lat, lon).subscribeOn(Schedulers.io())
+    override fun getWeatherList(lat: Double, lon: Double, units: String): Single<Base> {
+        return weatherRestService.getWeather(lat, lon, units).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
 
     override fun getWeatherListFromDatabase(): Single<Base> {
-      TODO("Not yet implemented")
+        TODO("Not yet implemented")
         // return database.WeatherDAO().getWeather()
     }
 

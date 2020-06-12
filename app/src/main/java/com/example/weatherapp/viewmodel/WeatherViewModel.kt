@@ -18,11 +18,11 @@ class WeatherViewModel @Inject constructor(private val weatherRepositoryImp: Wea
     val stateLiveData: LiveData<AppState> get() = stateMutableLiveData
     var loaded = false
 
-    fun getWeather(lat: Double, lon: Double) {
+    fun getWeather(lat: Double, lon: Double, units:String) {
 
         stateMutableLiveData.value = AppState.LOADING
         disposable.add(
-            weatherRepositoryImp.getWeatherList(lat, lon).subscribe({
+            weatherRepositoryImp.getWeatherList(lat, lon, units).subscribe({
                 // val mutableList: MutableList<MyDailyInfo> = mutableListOf()
                 loaded = true
                 if (it.equals(null)) {

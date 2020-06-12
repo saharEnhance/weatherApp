@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.os.Looper
 import android.os.Parcelable
 import android.provider.Settings
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -26,7 +25,6 @@ import com.example.weatherapp.R
 import com.example.weatherapp.inject.WeatherApplication
 import com.example.weatherapp.model.Base
 import com.example.weatherapp.model.Hourly
-import com.example.weatherapp.model.WeatherDAO
 import com.example.weatherapp.viewmodel.WeatherViewModel
 import com.example.weatherapp.viewmodel.WeatherViewModelFactory
 import com.google.android.gms.location.*
@@ -50,9 +48,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mFusedLocationClient: FusedLocationProviderClient
     var lat: Double = 0.0
     var lon: Double = 0.0
-
-    var celOn: Boolean = false
- //   var dao: WeatherDAO?= null
+    var units: String = "metric"
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -96,7 +92,6 @@ class MainActivity : AppCompatActivity() {
         seeDetails.setOnClickListener {
             startActivity(intent)
         }
-       // Log.d("dao = ", dao?.getWeather().toString())
     }
 
     @SuppressLint("MissingPermission")
@@ -104,16 +99,14 @@ class MainActivity : AppCompatActivity() {
 
         if (checkPermissions()) {
             if (isLocationEnabled()) {
-
                 mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
                     var location: Location? = task.result
                     if (location == null) {
                         requestNewLocationData()
                     } else {
-
                         lat = location.latitude
                         lon = location.longitude
-                        viewModel.getWeather(lat, lon)
+                        viewModel.getWeather(lat, lon, units)
                     }
                 }
             } else {
@@ -199,10 +192,7 @@ class MainActivity : AppCompatActivity() {
 
         adapter?.updateWeather(hourly)
         initRecyclerView(hourly)
-        if (celOn) {
-            textTemp.text = weatherList.current.temp.toString() + "°C"
-        }
-        textTemp.text = weatherList.current.temp.toString() + "°F"
+        textTemp.text = weatherList.current.temp.toString()
         textFeel.text = weatherList.current.feels_like.toString()
         textDescription.text = weatherList.current.weather[0].description
         var st = weatherList.current.weather[0].icon
@@ -270,12 +260,12 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-
             R.id.option_celcius -> {
                 displayToast(getString(R.string.option_celcius_message))
                 //   item.setIcon(R.drawable.ic_favorite_foreground)
                 //  item.isVisible = false
-                celOn = true
+                units = "metric"
+                viewModel.getWeather(lat, lon, units)
                 return true
             }
             R.id.option_farenheit -> {
@@ -284,7 +274,8 @@ class MainActivity : AppCompatActivity() {
                 //item.isVisible = false
                 /*listView.setVisibility(View.VISIBLE)
                 gv.setVisibility(View.INVISIBLE)*/
-
+                units = "imperial"
+                viewModel.getWeather(lat, lon, units)
                 return true
             }
             /*     R.id.search -> {

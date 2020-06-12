@@ -15,7 +15,7 @@ class DetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val netDate = Date(daily.dt.toLong() * 1000)
         val date = sdf.format(netDate)
         itemView.timeViewH.text = date.toString()
-        itemView.degreeViewH.text = daily.clouds.toString()
+        itemView.degreeViewH.text = daily.temp.day.toString()
         itemView.percentViewH.text = daily.rain.toString()
         itemView.windViewH.text = daily.clouds.toString()
         var st = daily.weather[0].icon
