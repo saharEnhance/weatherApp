@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Weather Forecast</string>
+    <string name="app_name">Dictionary</string>
     <string name="action_favorites_message">favorites</string>
     <string name="app_bar_switch">switch degree</string>
     <string name="action_status_message">status</string>
@@ -12,6 +12,9 @@
     <string name="app_label">label</string>
     <string name="search_hint">92626</string>
     <string name="see_details">See Details</string>
+    <string name="Celcius">C°</string>
+    <string name="Farenheit">F°</string>
+    <string name="search_here">search here...</string>
 
 
 </resources>

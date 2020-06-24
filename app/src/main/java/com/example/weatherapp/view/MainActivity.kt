@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                 is WeatherViewModel.AppState.SUCCESS -> {
                     displayWeather(appState.weatherList, appState.weatherList.hourly)
 
-                    var dailyList = appState.weatherList.daily
+                    val dailyList = appState.weatherList.daily
                     intent.putParcelableArrayListExtra(
                         "parce",
                         dailyList as ArrayList<out Parcelable?>?
@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
         if (checkPermissions()) {
             if (isLocationEnabled()) {
                 mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
-                    var location: Location? = task.result
+                    val location: Location? = task.result
                     if (location == null) {
                         requestNewLocationData()
                     } else {
@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private fun requestNewLocationData() {
-        var mLocationRequest = LocationRequest()
+        val mLocationRequest = LocationRequest()
         mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         mLocationRequest.interval = 0
         mLocationRequest.fastestInterval = 0
@@ -136,14 +136,14 @@ class MainActivity : AppCompatActivity() {
 
     private val mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
-            var mLastLocation: Location = locationResult.lastLocation
+            val mLastLocation: Location = locationResult.lastLocation
             lat = mLastLocation.latitude
             lon = mLastLocation.longitude
         }
     }
 
     private fun isLocationEnabled(): Boolean {
-        var locationManager: LocationManager =
+        val locationManager: LocationManager =
             getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
@@ -195,8 +195,9 @@ class MainActivity : AppCompatActivity() {
         textTemp.text = weatherList.current.temp.toString()
         textFeel.text = weatherList.current.feels_like.toString()
         textDescription.text = weatherList.current.weather[0].description
-        var st = weatherList.current.weather[0].icon
-        Picasso.get().load("https://openweathermap.org/img/wn/$st@2x.png").into(imageView)
+        val st = weatherList.current.weather[0].icon
+        Picasso.get().load("https://openweathermap.org/img/wn/$st@2x.png").placeholder(R.mipmap.weather_app_icon)
+            .into(imageView)
         minMax.text = weatherList.current.humidity.toString()
         val sdf = SimpleDateFormat("dd/MM/yy hh:mm a")
         val netDate = Date(weatherList.current.dt.toLong() * 1000)

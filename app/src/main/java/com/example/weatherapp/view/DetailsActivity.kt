@@ -27,7 +27,7 @@ class DetailsActivity : AppCompatActivity() {
         actionbar.setDisplayHomeAsUpEnabled(true)
         actionbar.setHomeAsUpIndicator(R.drawable.ic_backarrow_foreground)
 
-        val dailyArrayList = intent.getParcelableArrayListExtra<Daily>("parce")
+        val dailyArrayList = intent.getParcelableArrayListExtra<Daily>("parce")?: ArrayList()
         initRecyclerView(dailyArrayList)
     }
 

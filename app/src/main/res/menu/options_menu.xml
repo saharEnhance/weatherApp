@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/option_farenheit"
+        android:orderInCategory="1"
+        app:showAsAction="never"
+        android:title="@string/Farenheit"/>
+    <item
+        android:id="@+id/option_celcius"
+        android:orderInCategory="2"
+        app:showAsAction="never"
+        android:title="@string/Celcius"/>
+<!--    <item
         android:id="@+id/degree"
         android:title="Degree">
         <menu>
@@ -21,14 +29,14 @@
                 android:title="F°"
                 app:showAsAction="never" />
         </menu>
-    </item>
+    </item>-->
     <item
         android:id="@+id/search"
         android:background="#FFFFFF"
         android:icon="@drawable/ic_search_foreground"
-        android:title="search here..."
+        android:title="@string/search_here"
         app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <!--<item
         app:actionViewClass="android.widget.Switch"
         android:id="@+id/mySwitch"

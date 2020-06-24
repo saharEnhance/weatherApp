@@ -18,6 +18,11 @@ class WeatherRepositoryImp @Inject constructor(
 
     override fun getWeatherListFromDatabase(): Single<Base> {
         TODO("Not yet implemented")
+        //check 30 min past otherwise call network
+        //if true return data
+        //if fal netw -> DB
+//        val dO= database.WeatherDAO()
+//        dO.
         // return database.WeatherDAO().getWeather()
     }
 
